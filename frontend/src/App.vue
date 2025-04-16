@@ -2,6 +2,6 @@
 
 <template>
   <main>
-    Hello World
+    <div class="text-red-500">Hello World</div>
   </main>
 </template>
