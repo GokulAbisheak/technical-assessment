@@ -89,4 +89,25 @@ class UserController extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
+
+    public function uploadProfilePicture(Request $request, User $user)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Delete old one if exists
+        if ($user->profile_picture) {
+            Storage::disk('public')->delete($user->profile_picture);
+        }
+
+        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $user->profile_picture = $path;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profile picture updated successfully',
+            'profile_picture' => $path,
+        ]);
+    }
 }

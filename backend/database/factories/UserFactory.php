@@ -19,10 +19,10 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone_number' => $this->faker->phoneNumber(),
+            'phone_number' => $this->faker->numerify('07########'),
             'address' => $this->faker->address(),
             'age' => $this->faker->numberBetween(18, 70),
-            'profile_picture' => $this->faker->imageUrl(300, 300, 'people', true, 'User'),
+            'profile_picture' => '',
         ];
     }
 }
