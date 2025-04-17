@@ -1,7 +1,9 @@
-<script setup></script>
-
 <template>
-  <main>
-    <div class="text-red-500">Hello World</div>
-  </main>
+  <div>
+    <router-view />
+  </div>
 </template>
+
+<script setup>
+import { RouterView } from "vue-router";
+</script>
