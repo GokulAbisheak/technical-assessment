@@ -14,7 +14,7 @@
         <button
           :disabled="currentPage === 1"
           class="h-10 w-10 flex justify-center items-center rounded-full hover:bg-sky-100 disabled:text-gray-400 disabled:hover:bg-transparent"
-          @click="currentPage = 1"
+          @click="currentPage = currentPage - 1"
         >
           <ChevronLeftIcon class="w-5 h-5" />
         </button>
@@ -22,7 +22,7 @@
         <button
           :disabled="currentPage === totalPages"
           class="h-10 w-10 flex justify-center items-center rounded-full hover:bg-sky-100 disabled:text-gray-400 disabled:hover:bg-transparent"
-          @click="currentPage = totalPages"
+          @click="currentPage = currentPage + 1"
         >
           <ChevronRightIcon class="w-5 h-5" />
         </button>
@@ -53,6 +53,12 @@
           :key="user.id"
           :class="[index % 2 === 0 ? 'bg-sky-100' : 'bg-sky-50']"
         >
+          <td class="py-2 px-4">
+            <img v-if="user.profile_picture" :src="`http://localhost:8000/storage/${user.profile_picture}`" alt="Profile Picture" class="w-10 h-10 rounded-full object-cover">
+            <div v-else class="w-10 h-10 rounded-full bg-gray-200 flex justify-center items-center">
+              <UserIcon class="w-6 h-6 text-gray-500" />
+            </div>
+          </td>
           <td class="py-2 px-4">{{ user.name }}</td>
           <td class="py-2 px-4">{{ user.email }}</td>
           <td class="py-2 px-4">{{ user.phone_number }}</td>
@@ -87,12 +93,12 @@
 import { onMounted, ref, watch } from "vue";
 import api from "@/api/axios.js";
 import DefaultButton from "@/components/DefaultButton.vue";
-import { ArrowPathIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon, ChevronLeftIcon, ChevronRightIcon, UserIcon } from "@heroicons/vue/24/outline";
 import ConfirmBox from "@/components/ConfirmBox.vue";
 import AlertBox from "@/components/AlertBox.vue";
 import FullScreenSpinner from "@/components/FullScreenSpinner.vue";
 const users = ref([]);
-const titles = ref(["Name", "Email", "Phone Number", "Address", "Age", ""]);
+const titles = ref(["", "Name", "Email", "Phone Number", "Address", "Age", ""]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 const perPage = ref(5);
