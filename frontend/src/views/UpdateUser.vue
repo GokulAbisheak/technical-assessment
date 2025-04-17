@@ -189,7 +189,8 @@
       const formPayload = new FormData()
       for (const key in formData) {
         if (key !== 'profile_picture') {
-          formPayload.append(key, formData[key])
+          const value = formData[key]
+          formPayload.append(key, value === '' && key === 'age' ? null : value)
         }
       }
 

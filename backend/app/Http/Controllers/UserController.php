@@ -30,9 +30,13 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'phone_number' => 'nullable|numeric',
             'address' => 'nullable|string',
-            'age' => 'nullable|numeric|min:0|max:150',
+            'age' => 'nullable',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        if (!is_numeric($validated['age'] ?? null)) {
+            $validated['age'] = null;
+        }
 
         if ($request->hasFile('profile_picture')) {
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
@@ -61,9 +65,13 @@ class UserController extends Controller
             'email' => ['sometimes', 'required', 'email', Rule::unique('users')->ignore($user->id)],
             'phone_number' => 'nullable|numeric',
             'address' => 'nullable|string',
-            'age' => 'nullable|numeric|min:0|max:150',
+            'age' => 'nullable',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        if (!is_numeric($validated['age'] ?? null)) {
+            $validated['age'] = null;
+        }
 
         if ($request->hasFile('profile_picture')) {
             if ($user->profile_picture) {
