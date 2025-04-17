@@ -1,7 +1,7 @@
 <template>
-  <div class="absolute right-5 top-15 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] z-[100]">
-    <div
-      :class="[
+    <div class="w-full h-screen fixed top-0 left-0 pointer-events-none">
+        <div class="absolute right-5 bottom-5 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] z-[100]">
+            <div :class="[
         'min-h-[50px] min-w-[300px] rounded text-white flex justify-between px-5 items-center',
         type == 'success'
           ? 'bg-green-600'
@@ -10,12 +10,12 @@
           : type == 'warning'
           ? 'bg-yellow-500'
           : '',
-      ]"
-    >
-      <p class="text-sm">{{ message }}</p>
-      <XMarkIcon @click="closeAlert" class="w-5 h-5 cursor-pointer hover:scale-125 duration-300" />
+      ]">
+                <p class="text-sm">{{ message }}</p>
+                <XMarkIcon @click="closeAlert" class="w-5 h-5 cursor-pointer hover:scale-125 duration-300" />
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
