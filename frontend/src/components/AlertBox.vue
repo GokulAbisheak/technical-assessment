@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute right-5 top-5 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)]">
+  <div class="absolute right-5 top-15 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] z-[100]">
     <div
       :class="[
         'min-h-[50px] min-w-[300px] rounded text-white flex justify-between px-5 items-center',
