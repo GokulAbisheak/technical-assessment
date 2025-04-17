@@ -23,36 +23,36 @@
 </template>
 
 <script setup>
-defineProps({
-  modelValue: {
-    type: [String, Number, null],
-    required: true,
-  },
-  label: {
-    type: String,
-    default: "",
-  },
-  placeholder: {
-    type: String,
-    default: "",
-  },
-  type: {
-    type: String,
-    default: "text",
-  },
-  id: {
-    type: String,
-    required: true,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-  error: {
-    type: String,
-    default: "",
-  },
-});
+  defineProps({
+    modelValue: {
+      type: [String, Number, null],
+      required: true,
+    },
+    label: {
+      type: String,
+      default: '',
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
+    type: {
+      type: String,
+      default: 'text',
+    },
+    id: {
+      type: String,
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: String,
+      default: '',
+    },
+  })
 
-defineEmits(["update:modelValue"]);
+  defineEmits(['update:modelValue'])
 </script>

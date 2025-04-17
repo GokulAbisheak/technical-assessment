@@ -1,61 +1,61 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 
-import AdminLogin from "@/views/AdminLogin.vue";
-import ListUsers from "@/views/ListUsers.vue";
-import AddUser from "@/views/AddUser.vue";
-import UpdateUser from "@/views/UpdateUser.vue";
-import AdminLayout from "@/layout/AdminLayout.vue";
+import AdminLogin from '@/views/AdminLogin.vue'
+import ListUsers from '@/views/ListUsers.vue'
+import AddUser from '@/views/AddUser.vue'
+import UpdateUser from '@/views/UpdateUser.vue'
+import AdminLayout from '@/layout/AdminLayout.vue'
 
 const routes = [
   {
-    path: "/",
-    redirect: "/login"
+    path: '/',
+    redirect: '/login',
   },
   {
-    path: "/login",
-    name: "AdminLogin",
+    path: '/login',
+    name: 'AdminLogin',
     component: AdminLogin,
-    meta: { requiresGuest: true }
+    meta: { requiresGuest: true },
   },
   {
-    path: "/user",
+    path: '/user',
     component: AdminLayout,
     meta: { requiresAuth: true },
     children: [
       {
-        path: "",
-        redirect: "/users"
+        path: '',
+        redirect: '/users',
       },
       {
-        path: "/users",
-        name: "ListUsers",
+        path: '/users',
+        name: 'ListUsers',
         component: ListUsers,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
-      { 
-        path: "/users/add", 
-        name: "AddUser",
+      {
+        path: '/users/add',
+        name: 'AddUser',
         component: AddUser,
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true },
       },
-      { 
-        path: "/users/update/:id",
-        name: "UpdateUser",
+      {
+        path: '/users/update/:id',
+        name: 'UpdateUser',
         component: UpdateUser,
-        meta: { requiresAuth: true }
-      }
-    ]
-  }
-];
+        meta: { requiresAuth: true },
+      },
+    ],
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-});
+  routes,
+})
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('admin_token')
-  
+
   if (to.meta.requiresAuth && !token) {
     next('/admin/login')
   } else if (to.meta.requiresGuest && token) {
@@ -65,4 +65,4 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-export default router;
+export default router

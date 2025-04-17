@@ -11,22 +11,22 @@
 </template>
 
 <script setup>
-import DefaultButton from "@/components/DefaultButton.vue";
+  import DefaultButton from '@/components/DefaultButton.vue'
 
-defineProps({
-  message: {
-    type: String,
-    required: true,
-  },
-});
+  defineProps({
+    message: {
+      type: String,
+      required: true,
+    },
+  })
 
-const emit = defineEmits(["confirm", "cancel"]);
+  const emit = defineEmits(['confirm', 'cancel'])
 
-const handleConfirm = () => {
-  emit("confirm");
-};
+  const handleConfirm = () => {
+    emit('confirm')
+  }
 
-const handleCancel = () => {
-  emit("cancel");
-};
+  const handleCancel = () => {
+    emit('cancel')
+  }
 </script>
