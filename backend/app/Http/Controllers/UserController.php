@@ -12,11 +12,13 @@ class UserController extends Controller
     /**
      * Display a listing of the users.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+        $perPage = $request->input('per_page', 10);
+        $users = User::paginate($perPage);
         return response()->json($users);
     }
+
 
     /**
      * Store a newly created user in storage.
