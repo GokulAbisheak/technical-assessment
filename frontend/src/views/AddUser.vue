@@ -1,54 +1,98 @@
 <template>
-    <main class="flex flex-col gap-5 justify-center items-center min-h-[calc(100vh-64px)] w-full py-5">
-        <div class="max-w-[800px] w-full mx-auto rounded">
-            <div>
-                <h1 class="text-xl text-center font-bold uppercase col-span-2">Add New User</h1>
-            </div>
-        </div>
-        <div class="max-w-[800px] w-full mx-auto flex flex-col gap-4 border border-gray-300 rounded p-5 pt-10 relative">
-            <router-link to="/users"
-                class="absolute top-2 right-2 flex items-center gap-2 text-sm hover:text-red-600 p-2 justify-end w-fit rounded-full hover:bg-red-100">
-                <XMarkIcon class="w-5 h-5 font-bold" />
-            </router-link>
-            <div v-if="previewUrl" class="flex flex-col w-full justify-center items-center gap-2">
-                <img :src="previewUrl" alt="Profile Preview" class="w-24 h-24 rounded object-cover" />
-            </div>
+  <main
+    class="flex flex-col gap-5 justify-center items-center min-h-[calc(100vh-64px)] w-full py-5"
+  >
+    <div class="max-w-[800px] w-full mx-auto rounded">
+      <div>
+        <h1 class="text-xl text-center font-bold uppercase col-span-2">Add New User</h1>
+      </div>
+    </div>
+    <div
+      class="max-w-[800px] w-full mx-auto flex flex-col gap-4 border border-gray-300 rounded p-5 pt-10 relative"
+    >
+      <router-link
+        to="/users"
+        class="absolute top-2 right-2 flex items-center gap-2 text-sm hover:text-red-600 p-2 justify-end w-fit rounded-full hover:bg-red-100"
+      >
+        <XMarkIcon class="w-5 h-5 font-bold" />
+      </router-link>
+      <div v-if="previewUrl" class="flex flex-col w-full justify-center items-center gap-2">
+        <img :src="previewUrl" alt="Profile Preview" class="w-24 h-24 rounded object-cover" />
+      </div>
 
-            <div class="flex flex-col md:grid md:grid-cols-2 gap-4">
-                <InputBox v-model="formData.name" label="Name" placeholder="eg: John Smith" id="name"
-                    :error="errors.name" />
-                <InputBox v-model="formData.email" label="Email" placeholder="eg: name@example.com" id="email"
-                    :error="errors.email" />
-                <InputBox v-model="formData.phone_number" label="Phone Number" placeholder="eg: 94771234567" id="phone"
-                    :error="errors.phone_number" />
-                <InputBox v-model="formData.address" label="Address"
-                    placeholder="eg: No 123, Main Street, Kandy, Sri Lanka" id="address" :error="errors.address" />
-                <InputBox v-model.number="formData.age" label="Age" placeholder="eg: 20" type="number" id="age"
-                    :error="errors.age" />
-                <div class="flex flex-col gap-0.5 col-span-2">
-                    <label for="profile_picture" class="font-medium text-sm text-gray-700">
-                        <div
-                            class="w-full py-4 px-8 bg-gray-200 rounded-md flex justify-center items-center flex-col gap-1 border border-gray-300 border-dashed">
-                            <CloudArrowUpIcon class="w-5 h-5 text-gray-500" />
-                            <p class="text-sm text-gray-500">Upload Profile Picture</p>
-                        </div>
-                    </label>
-                    <input type="file" id="profile_picture" accept="image/*" @change="onFileChange"
-                        class="border border-gray-300 rounded p-2" hidden />
-                    <span v-if="errors.profile_picture" class="text-red-500 text-sm">{{
-                        errors.profile_picture
-                        }}</span>
-                </div>
-                <div class="col-span-2 grid grid-cols-2 gap-4">
-                    <DefaultButton type="primary" @click="handleSubmit">Submit</DefaultButton>
-                    <DefaultButton type="danger" @click="handleReset">Reset</DefaultButton>
-                </div>
+      <div class="flex flex-col md:grid md:grid-cols-2 gap-4">
+        <InputBox
+          v-model="formData.name"
+          label="Name"
+          placeholder="eg: John Smith"
+          id="name"
+          :error="errors.name"
+        />
+        <InputBox
+          v-model="formData.email"
+          label="Email"
+          placeholder="eg: name@example.com"
+          id="email"
+          :error="errors.email"
+        />
+        <InputBox
+          v-model="formData.phone_number"
+          label="Phone Number"
+          placeholder="eg: 94771234567"
+          id="phone"
+          :error="errors.phone_number"
+        />
+        <InputBox
+          v-model="formData.address"
+          label="Address"
+          placeholder="eg: No 123, Main Street, Kandy, Sri Lanka"
+          id="address"
+          :error="errors.address"
+        />
+        <InputBox
+          v-model.number="formData.age"
+          label="Age"
+          placeholder="eg: 20"
+          type="number"
+          id="age"
+          :error="errors.age"
+        />
+        <div class="flex flex-col gap-0.5 col-span-2">
+          <label for="profile_picture" class="font-medium text-sm text-gray-700">
+            <div
+              class="w-full py-4 px-8 bg-gray-200 rounded-md flex justify-center items-center flex-col gap-1 border border-gray-300 border-dashed"
+            >
+              <CloudArrowUpIcon class="w-5 h-5 text-gray-500" />
+              <p class="text-sm text-gray-500">Upload Profile Picture</p>
             </div>
+          </label>
+          <input
+            type="file"
+            id="profile_picture"
+            accept="image/*"
+            @change="onFileChange"
+            class="border border-gray-300 rounded p-2"
+            hidden
+          />
+          <span v-if="errors.profile_picture" class="text-red-500 text-sm">{{
+            errors.profile_picture
+          }}</span>
         </div>
-    </main>
-    <AlertBox v-if="showAlert" :type="alertType" :message="alertMessage" @closeAlert="showAlert = false"
-        navigate="/users" />
-    <FullScreenSpinner v-if="isLoading" />
+        <div class="col-span-2 grid grid-cols-2 gap-4">
+          <DefaultButton type="primary" @click="handleSubmit">Submit</DefaultButton>
+          <DefaultButton type="danger" @click="handleReset">Reset</DefaultButton>
+        </div>
+      </div>
+    </div>
+  </main>
+  <AlertBox
+    v-if="showAlert"
+    :type="alertType"
+    :message="alertMessage"
+    @closeAlert="showAlert = false"
+    navigate="/users"
+  />
+  <FullScreenSpinner v-if="isLoading" />
 </template>
 
 <script setup>
@@ -84,7 +128,6 @@
   const isLoading = ref(false)
   const previewUrl = ref(null)
 
-
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
@@ -97,13 +140,13 @@
   }
 
   const onFileChange = (event) => {
-  file.value = event.target.files[0]
-  if (file.value) {
-    previewUrl.value = URL.createObjectURL(file.value)
-  } else {
-    previewUrl.value = null
+    file.value = event.target.files[0]
+    if (file.value) {
+      previewUrl.value = URL.createObjectURL(file.value)
+    } else {
+      previewUrl.value = null
+    }
   }
-}
 
   const validateForm = () => {
     let isValid = true
