@@ -8,8 +8,21 @@ const instance = axios.create({
   },
 });
 
+// Set token from localStorage if it exists
+const token = localStorage.getItem('admin_token');
+if (token) {
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 instance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (response.config.url === '/login' && response.data.token) {
+      const token = response.data.token;
+      localStorage.setItem('admin_token', token);
+      instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+    return response;
+  },
   (error) => {
     console.error("API Error:", error.response || error.message);
     return Promise.reject(error);
