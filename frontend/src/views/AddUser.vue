@@ -103,6 +103,7 @@
   import AlertBox from '@/components/AlertBox.vue'
   import FullScreenSpinner from '@/components/FullScreenSpinner.vue'
   import { CloudArrowUpIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+  import { validateEmail, validatePhone } from '@/utils/validateHelpers.js'         
 
   const formData = reactive({
     name: '',
@@ -128,17 +129,7 @@
   const isLoading = ref(false)
   const previewUrl = ref(null)
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-  }
-
-  const validatePhone = (phone) => {
-    if (!phone) return true
-    const phoneRegex = /^(?:\+94|94|0)?7\d{8}$/
-    return phoneRegex.test(phone)
-  }
-
+  // File Upload
   const onFileChange = (event) => {
     file.value = event.target.files[0]
     if (file.value) {
@@ -148,15 +139,18 @@
     }
   }
 
+  // Form Validation 
   const validateForm = () => {
     let isValid = true
     Object.keys(errors).forEach((key) => (errors[key] = ''))
 
+    // Name Validation
     if (!formData.name.trim()) {
       errors.name = 'Name is required'
       isValid = false
     }
 
+    // Email Validation
     if (!formData.email.trim()) {
       errors.email = 'Email is required'
       isValid = false
@@ -165,16 +159,19 @@
       isValid = false
     }
 
+    // Phone Number Validation
     if (!validatePhone(formData.phone_number)) {
       errors.phone_number = 'Please enter a valid Sri Lankan phone number'
       isValid = false
     }
 
+    // Age Validation
     if (isNaN(formData.age) || formData.age < 0) {
       errors.age = 'Please enter a valid age'
       isValid = false
     }
 
+    // Profile Picture Validation
     if (file.value) {
       const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']
       if (!allowedTypes.includes(file.value.type)) {
@@ -189,6 +186,7 @@
     return isValid
   }
 
+  // Submit Form
   const handleSubmit = async () => {
     isLoading.value = true
     if (validateForm()) {
@@ -208,12 +206,14 @@
           },
         })
         if (res.status === 201) {
+          // Show success message
           showAlert.value = true
           alertType.value = 'success'
           alertMessage.value = 'User added successfully'
           handleReset()
         }
       } catch (error) {
+        // Show error message
         showAlert.value = true
         alertType.value = 'danger'
         alertMessage.value = error.response?.data?.message || 'An error occurred'
@@ -225,6 +225,7 @@
     }
   }
 
+  // Reset Form
   const handleReset = () => {
     Object.keys(formData).forEach((key) => (formData[key] = key === 'age' ? null : ''))
     Object.keys(errors).forEach((key) => (errors[key] = ''))

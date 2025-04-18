@@ -65,15 +65,18 @@
   const alertMessage = ref('')
   const isLoading = ref(false)
 
+  // Form Validation
   const validateForm = () => {
     let isValid = true
     Object.keys(errors).forEach((key) => (errors[key] = ''))
 
+    // Username Validation
     if (!formData.username.trim()) {
       errors.username = 'Username is required'
       isValid = false
     }
 
+    // Password Validation
     if (!formData.password.trim()) {
       errors.password = 'Password is required'
       isValid = false
@@ -82,6 +85,7 @@
     return isValid
   }
 
+  // Submit Form
   const handleLogin = async () => {
     if (validateForm()) {
       isLoading.value = true
@@ -106,6 +110,7 @@
           }, 1000)
         }
       } catch (error) {
+        // Show error message
         showAlert.value = true
         alertType.value = 'danger'
         alertMessage.value = error.response?.data?.message || 'Login failed. Please try again.'

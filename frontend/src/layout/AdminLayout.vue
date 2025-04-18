@@ -41,12 +41,15 @@
   const alertMessage = ref('')
   const isLoading = ref(false)
 
+  // Handle Logout
   const handleLogout = async () => {
     isLoading.value = true
     try {
       await api.post('/admin/logout')
       localStorage.removeItem('admin_token')
       api.defaults.headers.common['Authorization'] = ''
+
+      // Show success message
       showAlert.value = true
       alertType.value = 'success'
       alertMessage.value = 'Logged out successfully'
@@ -55,10 +58,12 @@
         router.push('/login')
       }, 1000)
     } catch (error) {
-      showAlert.value = true
+      // Show error message
+    showAlert.value = true
       alertType.value = 'danger'
       alertMessage.value = error.response?.data?.message || 'Logout failed. Please try again.'
     } finally {
+      // Hide loading
       isLoading.value = false
     }
   }

@@ -22,10 +22,12 @@
 
   const emit = defineEmits(['confirm', 'cancel'])
 
+  // Handle Confirm
   const handleConfirm = () => {
     emit('confirm')
   }
 
+  // Handle Cancel
   const handleCancel = () => {
     emit('cancel')
   }

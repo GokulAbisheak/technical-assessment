@@ -118,6 +118,7 @@
   import AlertBox from '@/components/AlertBox.vue'
   import FullScreenSpinner from '@/components/FullScreenSpinner.vue'
   import { CloudArrowUpIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+  import { validateEmail, validatePhone } from '@/utils/validateHelpers.js'
 
   const route = useRoute()
   const userId = route.params.id
@@ -145,23 +146,24 @@
   const alertMessage = ref('')
   const isLoading = ref(false)
 
+  // File Upload
   const onFileChange = (event) => {
     file.value = event.target.files[0]
     uploadProfilePicture()
   }
 
-  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  const validatePhone = (phone) => !phone || /^(?:\+94|94|0)?7\d{8}$/.test(phone)
-
+  // Form Validation 
   const validateForm = () => {
     let isValid = true
     Object.keys(errors).forEach((key) => (errors[key] = ''))
 
+    // Name Validation
     if (!formData.name.trim()) {
       errors.name = 'Name is required'
       isValid = false
     }
 
+    // Email Validation
     if (!formData.email.trim()) {
       errors.email = 'Email is required'
       isValid = false
@@ -170,11 +172,13 @@
       isValid = false
     }
 
+    // Phone Number Validation
     if (!validatePhone(formData.phone_number)) {
       errors.phone_number = 'Please enter a valid Sri Lankan phone number'
       isValid = false
     }
 
+    // Age Validation
     if (isNaN(+formData.age) || +formData.age < 0) {
       errors.age = 'Please enter a valid age'
       isValid = false
@@ -183,6 +187,7 @@
     return isValid
   }
 
+  // Submit Form
   const handleUpdate = async () => {
     isLoading.value = true
     if (validateForm()) {
@@ -213,16 +218,20 @@
     }
   }
 
+  // Reset Form
   const handleReset = () => {
     Object.keys(errors).forEach((key) => (errors[key] = ''))
     file.value = null
   }
 
+  // Fetch User Data
   const fetchUserData = async () => {
     isLoading.value = true
     try {
       const res = await api.get(`/users/${userId}`)
       const user = res.data
+
+      // Assign User Data to Form Data
       Object.assign(formData, {
         name: user.name,
         email: user.email,
@@ -232,14 +241,17 @@
         profile_picture: user.profile_picture || '',
       })
     } catch (error) {
+      // Show error message
       alertMessage.value = 'Failed to load user data'
       alertType.value = 'danger'
       showAlert.value = true
     } finally {
+      // Hide loading
       isLoading.value = false
     }
   }
 
+  // Upload Profile Picture
   const uploadProfilePicture = async () => {
     const formData = new FormData()
     formData.append('profile_picture', file.value)
@@ -257,6 +269,7 @@
     }
   }
 
+  // Remove Profile Picture
   const removeProfilePicture = async () => {
     try {
       const res = await api.put(`/users/${userId}`, { profile_picture: null })
@@ -267,5 +280,6 @@
     }
   }
 
+  // Fetch User Data on Mount
   onMounted(fetchUserData)
 </script>

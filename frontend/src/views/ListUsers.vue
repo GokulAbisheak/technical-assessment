@@ -120,6 +120,7 @@
   const alertType = ref('success')
   const isLoading = ref(false)
 
+  // Fetch Users
   const fetchUsers = async () => {
     isLoading.value = true
     const res = await api.get(`/users?page=${currentPage.value}&per_page=${perPage.value}`)
@@ -128,35 +129,50 @@
     isLoading.value = false
   }
 
+  // Fetch Users on Mount
   onMounted(fetchUsers)
 
+  // Fetch Users on Page Change or Per Page Change
   watch([currentPage, perPage], fetchUsers)
 
+  // Delete User
   const deleteUser = async (id) => {
     try {
+      // Show loading
       isLoading.value = true
+
+      // Delete User
       await api.delete(`/users/${id}`)
+
+      // Update Users List
       users.value = users.value.filter((user) => user.id !== id)
+
+      // Show success message
       showAlert.value = true
       alertMessage.value = 'User deleted successfully'
       alertType.value = 'success'
     } catch (error) {
+      // Show error message
       console.error('Failed to delete user:', error)
       showAlert.value = true
       alertMessage.value = 'Failed to delete user'
       alertType.value = 'danger'
     } finally {
+      // Close Confirm Box
       showConfirmBox.value = false
+      // Hide loading
       isLoading.value = false
     }
   }
 
+  // Open Confirm Box
   const openConfirmBox = (id) => {
     showConfirmBox.value = true
     confirmMessage.value = 'Are you sure you want to delete this user?'
     userIdToDelete.value = id
   }
 
+  // Handle Cancel
   const handleCancel = () => {
     showConfirmBox.value = false
   }

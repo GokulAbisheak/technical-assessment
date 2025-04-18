@@ -54,6 +54,7 @@
     },
   })
 
+  // Close Alert
   const closeAlert = () => {
     emit('closeAlert')
 
@@ -62,6 +63,7 @@
     }
   }
 
+  // Close Alert on Mount
   onMounted(() => {
     if (props.autoClose) {
       setTimeout(closeAlert, props.duration)
