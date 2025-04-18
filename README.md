@@ -7,8 +7,9 @@
 3. [Additional Features Implemented](#additional-features-implemented)  
 4. [Best Practices Followed](#best-practices-followed)  
 5. [Project Environment Setup](#project-environment-setup)  
-6. [Run Project on Localhost](#run-project-on-localhost)  
-7. [Screenshots of Running Application](#screenshots-of-running-application)  
+6. [Run Project on Localhost](#run-project-on-localhost)
+7. [Login Credentials for Admin](#login-credentials-for-admin)
+8. [Screenshots of Running Application](#screenshots-of-running-application)  
 
 <br />
 
@@ -83,42 +84,53 @@
    ```bash
    composer install
    ```
+   
 
-4. Migrate the database
+4. Rename the `.env.example` to `.env` and change the database configurations if necessary
+
+
+5. Migrate the database
 
    ```bash
    php artisan migrate
    ```
 
-5. Run the seeders
+6. Run the seeders
 
    ```bash
    php artisan db:seed
    ```
 
-6. Start the backend
+7. Start the backend
 
    ```bash
    php artisan serve
    ```
 
-7. Open a new terminal and navigate to frontend folder
+8. Open a new terminal and navigate to frontend folder
 
    ```bash
    cd frontend
    ```
 
-8. Install the dependencies
+9. Install the dependencies
 
    ```bash
    npm install
    ```
 
-9. Run the frontend
+10. Run the frontend
 
     ```bash
-   npm run dev
-   ```
+    npm run dev
+    ```
+   
+<br />
+
+## Login Credetials for Admin
+
+- username `admin`
+- password `admin`
 
 <br />
 
@@ -131,6 +143,10 @@
 ![image](https://github.com/user-attachments/assets/fb8fe6fe-f40a-460d-b7d6-a165eb5c7644)
 ![image](https://github.com/user-attachments/assets/e7865b31-4e59-45d9-bdac-b1ea6bbe9ca1)
 ![image](https://github.com/user-attachments/assets/4de6bc98-4d25-402d-bd87-8d28b61a05cc)
+![image](https://github.com/user-attachments/assets/891b2cda-44db-47af-ac19-28bb4f652f38)
+![image](https://github.com/user-attachments/assets/c8ebedb6-16e4-4e60-8737-e939100b9254)
+![image](https://github.com/user-attachments/assets/3ebaa9cb-6d38-4690-915b-21ea9b1a1140)
+
 
 
 
